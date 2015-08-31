@@ -9,7 +9,7 @@ remove_file "Gemfile"
 run "touch Gemfile"
 #be sure to add source at the top of the file
 add_source 'https://rubygems.org'
-gem 'rails', '4.2.1'
+gem 'rails', '4.2.3'
 gem 'uglifier'
 gem 'jquery-rails'
 gem 'turbolinks'
@@ -19,7 +19,7 @@ gem 'bootstrap-sass'
 gem 'sass-rails'
 gem 'compass'
 gem 'simple_form'
-gem 'Kaminari'
+gem 'kaminari'
 gem 'sdoc', group: :doc
 #gem and gem_group will work from Rails Template API
 gem_group :development, :test do
