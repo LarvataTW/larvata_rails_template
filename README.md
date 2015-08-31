@@ -7,7 +7,7 @@
  使用說明
  ----------
 
-  rails new your_project_name -m  ./template.rb
+  rails new your_project_name -m  https://raw.githubusercontent.com/LarvataTW/rails_template/master/template.rb
 
 
   參考資料
