@@ -17,7 +17,7 @@ gem 'devise'
 gem 'cancancan'
 gem 'bootstrap-sass'
 gem 'sass-rails'
-gem 'compass'
+gem 'compass-rails'
 gem 'simple_form'
 gem 'kaminari'
 gem 'sdoc', group: :doc
