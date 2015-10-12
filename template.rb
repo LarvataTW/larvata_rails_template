@@ -9,7 +9,7 @@ remove_file "Gemfile"
 run "touch Gemfile"
 #be sure to add source at the top of the file
 add_source 'https://rubygems.org'
-gem 'rails', '4.2.3'
+gem 'rails', '4.2.4'
 gem 'uglifier'
 gem 'jquery-rails'
 gem 'turbolinks'
@@ -39,6 +39,7 @@ run "bundle"
 generate 'devise:install'
 generate 'devise User'
 generate 'devise:views'
+generate 'simple_form:install --bootstrap'
 
 rake 'db:migrate'
 git :init
