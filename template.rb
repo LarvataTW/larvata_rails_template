@@ -43,3 +43,4 @@ generate 'devise:views'
 rake 'db:migrate'
 git :init
 git add: '.'
+git flow init
