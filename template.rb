@@ -21,6 +21,7 @@ gem 'compass-rails'
 gem 'simple_form'
 gem 'kaminari'
 gem 'sdoc', group: :doc
+gem 'bulk_insert'  # 大量匯入用
 #gem and gem_group will work from Rails Template API
 gem_group :development, :test do
     gem 'sqlite3'
