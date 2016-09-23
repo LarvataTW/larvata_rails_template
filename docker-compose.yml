@@ -1,0 +1,11 @@
+your_image_name:
+  image: your_image_name
+  container_name: your_image_name
+  restart: always
+  volumes:
+    - ./:/home/app
+  ports:
+    - "8080:80"
+    - "8443:443"
+  env_file:
+    - docker.env

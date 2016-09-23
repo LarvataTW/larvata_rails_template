@@ -15,11 +15,9 @@ rails new project_name -m https://raw.githubusercontent.com/LarvataTW/rails_temp
 
 # Rails Dockerize for Larvata
 
-## Files Tree
-
 ## References
 
 * https://github.com/phusion/passenger-docker
 * https://docs.docker.com/engine/examples/
+* https://docs.docker.com/compose/rails/
 * https://semaphoreci.com/community/tutorials/dockerizing-a-ruby-on-rails-application
-* https://letsencrypt.org/
