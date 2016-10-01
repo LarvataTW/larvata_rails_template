@@ -1,4 +1,7 @@
 set :application, 'your_app_name'
+set :image_name, 'your_docker_image_name'
+set :container_name, 'your_docker_container_name'
+
 set :repo_url, 'git@bitbucket.org:your_app_name.git'
 
 # Default branch is :master
@@ -38,9 +41,9 @@ namespace :deploy do
   task :dockerize do
     on roles(:web) do
       previous = capture("ls -Ct #{releases_path} | awk '{print $2}'").to_s.strip
+      execute "cd #{release_path} && docker build --rm -t #{fetch(:image_name)} ."
       execute "cd #{releases_path}/#{previous} && docker-compose stop; true"
       execute "cd #{releases_path}/#{previous} && docker-compose rm -f; true"
-      execute "cd #{release_path} && docker build --rm -t your_docker_image_name ."
       execute "cd #{release_path} && docker-compose up -d"
     end
   end
@@ -48,21 +51,24 @@ namespace :deploy do
   desc 'Precompile Assets'
   task :precompile do
     on roles(:web) do
-      execute "docker exec your_docker_image_name rake -f /home/app/Rakefile assets:precompile RAILS_ENV=production"
+      execute "docker exec #{fetch(:container_name)} rake -f /home/app/Rakefile assets:precompile RAILS_ENV=production"
     end
   end
 
   desc 'Migrate Database'
   task :migrate do
     on roles(:db) do
-      execute "docker exec your_docker_image_name rake -f /home/app/Rakefile db:migrate RAILS_ENV=production"
+      execute "docker exec #{fetch(:container_name)} rake -f /home/app/Rakefile db:migrate RAILS_ENV=production"
     end
   end
 
-  desc 'Seed Database'
-  task :seed do
+  desc 'Reset Database'
+  task :reset_db do
     on roles(:db) do
-      execute "docker exec your_docker_image_name rake -f /home/app/Rakefile db:seed RAILS_ENV=production"
+      execute "docker exec #{fetch(:container_name)} rake -f /home/app/Rakefile db:drop RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1"
+      execute "docker exec #{fetch(:container_name)} rake -f /home/app/Rakefile db:create RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1"
+      execute "docker exec #{fetch(:container_name)} rake -f /home/app/Rakefile db:migrate RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1"
+      execute "docker exec #{fetch(:container_name)} rake -f /home/app/Rakefile db:seed RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1"
     end
   end
 
