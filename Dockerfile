@@ -1,6 +1,9 @@
 # See https://github.com/phusion/passenger-docker/blob/master/Changelog.md
 FROM phusion/passenger-ruby23:0.9.19
 
+RUN apt-get update && \
+    apt-get install -y libpng12-dev libglib2.0-dev zlib1g-dev libbz2-dev libtiff4-dev libjpeg8-dev imagemagick
+
 # Set correct environment variables.
 ENV HOME /root
 
