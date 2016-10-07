@@ -45,6 +45,7 @@ namespace :deploy do
       execute "cd #{releases_path}/#{previous} && docker-compose stop; true"
       execute "cd #{releases_path}/#{previous} && docker-compose rm -f; true"
       execute "cd #{release_path} && docker-compose up -d"
+      execute "cd #{shared_path} && chmod 777 log tmp/pids tmp/cache tmp/sockets public/system public/assets"
     end
   end
 
