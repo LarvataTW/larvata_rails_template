@@ -75,7 +75,7 @@ namespace :deploy do
   desc "Tail Rails Logs From Server"
   task :logs do
     on roles(:web) do
-      execute "tail -f #{shared_path}/log/production.log"
+      execute "cd #{release_path} && docker-compose logs -f"
     end
   end
 
