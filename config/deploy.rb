@@ -72,6 +72,13 @@ namespace :deploy do
     end
   end
 
+  desc "Tail Rails Logs From Server"
+  task :logs do
+    on roles(:web) do
+      execute "tail -f #{shared_path}/log/production.log"
+    end
+  end
+
   after 'deploy:published', 'deploy:dockerize'
   after 'deploy:dockerize', 'deploy:precompile'
   after 'deploy:precompile', 'deploy:migrate'
