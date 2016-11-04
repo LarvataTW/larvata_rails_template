@@ -2,7 +2,7 @@ set :application, 'your_app_name'
 set :image_name, 'your_docker_image_name'
 set :container_name, 'your_docker_container_name'
 
-set :repo_url, 'git@bitbucket.org:your_app_name.git'
+set :repo_url, 'git@bitbucket.org:larvata-tw/your_app_name.git'
 
 # Default branch is :master
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -40,7 +40,7 @@ namespace :deploy do
   desc 'Running a docker containers for this project.'
   task :dockerize do
     on roles(:web) do
-      previous = capture("ls -Ct #{releases_path} | awk '{print $2}'").to_s.strip
+      previous = capture("ls -t1 #{releases_path} | sed -n '2p'").to_s.strip
       execute "cd #{release_path} && docker build --rm -t #{fetch(:image_name)} ."
       execute "cd #{releases_path}/#{previous} && docker-compose stop && docker-compose rm -f"
       execute "cd #{release_path} && docker-compose up -d"
@@ -75,7 +75,7 @@ namespace :deploy do
   desc "Tail Rails Logs From Server"
   task :logs do
     on roles(:web) do
-      execute "cd #{release_path} && docker-compose logs -f"
+      execute "cd #{shared_path}/log && tail -f production.log"
     end
   end
 
