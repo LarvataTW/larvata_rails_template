@@ -26,6 +26,10 @@ gem 'devise-i18n'
 gem 'kaminari'
 gem 'kaminari-i18n'
 
+gem 'grape'
+gem 'grape-swagger'
+gem 'grape-swagger-rails'
+
 gem 'aasm'
 gem 'pundit'
 gem 'ransack'
