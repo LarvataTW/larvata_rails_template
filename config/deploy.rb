@@ -48,6 +48,13 @@ namespace :deploy do
     end
   end
 
+  desc 'Kill the application docker container.'
+  task :kill_docker do
+    on roles(:web) do
+      execute "docker stop #{fetch(:container_name)}; docker rm -f #{fetch(:container_name)}"
+    end
+  end
+
   desc 'Precompile Assets'
   task :precompile do
     on roles(:web) do
