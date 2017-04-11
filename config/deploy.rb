@@ -58,7 +58,7 @@ namespace :deploy do
   desc 'Precompile Assets'
   task :precompile do
     on roles(:web) do
-      execute "docker exec #{fetch(:container_name)} /bin/bash -c 'cd /home/app && bundle exec rake assets:precompile'"
+      execute "docker exec #{fetch(:container_name)} /bin/bash -c 'cd /home/app && RAILS_ENV=production bundle exec rake assets:precompile'"
     end
   end
 
