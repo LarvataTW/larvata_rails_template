@@ -1,0 +1,7 @@
+--database=mysql
+--webpack
+--skip-action-cable
+--skip-spring
+--skip-coffee
+--skip-turbolinks
+--template=./template.rb
