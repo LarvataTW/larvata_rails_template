@@ -78,4 +78,4 @@ git :init
 git add: "."
 git commit: "-a -m 'Initial commit by Rails bootstrap script.'"
 
-git flow init
+run "git flow init"
