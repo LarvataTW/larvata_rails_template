@@ -86,6 +86,14 @@ namespace :deploy do
     end
   end
 
+  desc "Console Into Docker Container Shell"
+  task :console do
+    roles(:web).each do |host|
+      cmd = "ssh -t -p %s %s@%s docker exec -it %s bash" % [host.port, host.user, host.hostname, fetch(:container_name)]
+      system cmd
+    end
+  end
+
   after 'deploy:published', 'deploy:dockerize'
   after 'deploy:dockerize', 'deploy:precompile'
   after 'deploy:precompile', 'deploy:migrate'
