@@ -1,6 +1,6 @@
 require "capistrano/setup"
 require "capistrano/deploy"
-require "capistrano/hipchat"
+require "hipchat/capistrano"
 
 # Hipchat hook
 set :hipchat_token, ""

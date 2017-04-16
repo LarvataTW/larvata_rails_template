@@ -36,8 +36,8 @@ gem 'ransack'
 gem 'paperclip'
 gem 'paper_trail'
 gem 'simple_form'
-
 gem 'bulk_insert'
+
 gem 'hipchat'
 
 gem_group :test do
