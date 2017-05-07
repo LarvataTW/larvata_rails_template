@@ -2,8 +2,8 @@ def source_paths
   [File.expand_path(File.dirname(__FILE__))]
 end
 
-remove_file "Gemfile"
-run "touch Gemfile"
+remove_file 'Gemfile'
+run 'touch Gemfile'
 
 # be sure to add source at the top of the file
 add_source 'https://rubygems.org'
@@ -65,7 +65,15 @@ gem_group :production do
   gem 'exception_notification'
 end
 
-run "bundle"
+group :darwin do
+  gem 'rb-fsevent'
+end
+
+group :linux do
+  gem 'rb-inotify'
+end
+
+run 'bundle'
 
 generate 'devise:install'
 generate 'devise User'
@@ -75,7 +83,7 @@ generate 'simple_form:install --bootstrap'
 rake 'db:migrate'
 
 git :init
-git add: "."
+git add: '.'
 git commit: "-a -m 'Initial commit by Rails bootstrap script.'"
 
-run "git flow init"
+run 'git flow init'
