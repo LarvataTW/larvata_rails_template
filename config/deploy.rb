@@ -74,7 +74,7 @@ namespace :deploy do
     on roles(:db) do
       execute "docker exec #{fetch(:container_name)} /bin/bash -c 'cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:drop'"
       execute "docker exec #{fetch(:container_name)} /bin/bash -c 'cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:create'"
-      execute "docker exec #{fetch(:container_name)} /bin/bash -c 'cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:migrate'"
+      execute "docker exec #{fetch(:container_name)} /bin/bash -c 'cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:schema:load'"
       execute "docker exec #{fetch(:container_name)} /bin/bash -c 'cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:seed'"
     end
   end
