@@ -59,6 +59,7 @@ gem_group :development, :test do
   gem 'guard-livereload'
   gem 'capistrano'
   gem 'rails-erd'
+  gem 'bullet'
 end
 
 gem_group :production do
