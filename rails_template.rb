@@ -1,14 +1,4 @@
-def source_paths
-  [File.expand_path(File.dirname(__FILE__))]
-end
-
-remove_file 'Gemfile'
-run 'touch Gemfile'
-
-# be sure to add source at the top of the file
-add_source 'https://rubygems.org'
-
-gem 'rails', '4.2.8'
+gem 'rails', '5.1'
 gem 'rails-i18n'
 
 gem 'jquery-rails'
@@ -28,7 +18,6 @@ gem 'kaminari-i18n'
 
 gem 'grape'
 gem 'grape-swagger'
-gem 'grape-swagger-rails'
 
 gem 'aasm'
 gem 'pundit'
@@ -42,6 +31,7 @@ gem 'hipchat'
 
 gem_group :test do
   gem 'sqlite3'
+  gem 'rspec'
 end
 
 gem_group :development, :test do
@@ -60,6 +50,7 @@ gem_group :development, :test do
   gem 'capistrano'
   gem 'rails-erd'
   gem 'bullet'
+  gem 'rspec'
 end
 
 gem_group :production do
@@ -74,7 +65,9 @@ group :linux do
   gem 'rb-inotify'
 end
 
-run 'bundle'
+run "rm README.rdoc"
+run "echo '# #{@app_name.titleize}' >> README.md"
+run "bundle"
 
 generate 'devise:install'
 generate 'devise User'
