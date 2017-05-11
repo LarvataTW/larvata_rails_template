@@ -1,0 +1,8 @@
+# ~/.railsrc
+
+--database=mysql
+--skip-bundle
+--skip-spring
+--skip-test-unit
+--skip-turbolinks
+# --template=/path/to/rails_template.rb
