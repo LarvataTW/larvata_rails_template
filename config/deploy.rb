@@ -39,9 +39,9 @@ namespace :deploy do
     on roles(:web) do
       previous = capture("ls -t1 #{releases_path} | sed -n '2p'").to_s.strip
       execute "cd #{release_path} && docker build --rm -t #{fetch(:image_name)} ."
-      execute "cd #{releases_path}/#{previous} && docker-compose stop && docker-compose rm -f"
+      execute "cd #{releases_path}/#{previous} && docker-compose down"
       execute "cd #{release_path} && docker-compose up -d"
-      execute "cd #{shared_path} && chmod 777 log tmp public/system public/assets"
+      execute "cd #{shared_path} && chmod 777 log tmp"
     end
   end
 
