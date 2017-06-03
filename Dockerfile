@@ -20,8 +20,8 @@ WORKDIR /tmp
 RUN bundle install
 
 # Add the nginx info
-ADD nginx.conf /etc/nginx/sites-enabled/webapp.conf
-ADD rails.env.conf /etc/nginx/main.d/rails.env.conf
+ADD config/nginx.conf /etc/nginx/sites-enabled/webapp.conf
+ADD config/rails.env.conf /etc/nginx/main.d/rails.env.conf
 
 # Remove the default site
 RUN rm /etc/nginx/sites-enabled/default
