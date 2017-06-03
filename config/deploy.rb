@@ -9,7 +9,7 @@ set :deploy_to, '/www/your_app_name'
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 append :linked_files, 'docker.env'
-append :linked_dirs, 'log', 'tmp', 'public/.well-known/acme-challenge', 'public/system', 'public/assets', 'certs'
+append :linked_dirs, 'log', 'tmp', 'public/.well-known/acme-challenge', 'public/system', 'public/assets'
 
 namespace :deploy do
 
