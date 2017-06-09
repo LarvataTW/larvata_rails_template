@@ -79,6 +79,13 @@ namespace :deploy do
     end
   end
 
+  desc 'Show deployed revision'
+  task :revision do
+    on roles(:web) do
+      execute "cat #{current_path}/REVISION"
+    end
+  end
+
   after 'deploy:published', 'deploy:dockerize'
   after 'deploy:dockerize', 'deploy:precompile'
   after 'deploy:precompile', 'deploy:migrate'
