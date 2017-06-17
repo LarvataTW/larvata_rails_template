@@ -4,8 +4,9 @@ your_image_name:
   restart: always
   volumes:
     - ./:/home/app
+  expose:
+    - "80"
   ports:
-    - "8080:80"
-    - "8443:443"
+    - "80"
   env_file:
     - docker.env
