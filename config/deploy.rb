@@ -69,10 +69,13 @@ namespace :deploy do
   task :reset_db do
     on roles(:db) do
       set :reset_cmd,
-        "cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:drop && \
-         cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:create && \
-         cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:schema:load && \
-         cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:seed"
+        "cd /home/app && \
+         export RAILS_ENV=production; \
+         export DISABLE_DATABASE_ENVIRONMENT_CHECK=1; \
+         bundle exec rake db:drop && \
+         bundle exec rake db:create && \
+         bundle exec rake db:schema:load && \
+         bundle exec rake db:seed"
       execute "#{fetch(:docker)} exec #{fetch(:container_name)} sh -c '#{fetch(:reset_cmd)}'"
     end
   end
