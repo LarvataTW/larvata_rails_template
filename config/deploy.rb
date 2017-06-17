@@ -1,12 +1,14 @@
 set :application, 'your_app_name'
-set :image_name, 'your_docker_image_name'
-set :container_name, 'your_docker_container_name'
-
 set :keep_releases, 3
 set :repo_url, 'git@bitbucket.org:larvata-tw/your_app_name.git'
 set :deploy_to, '/www/your_app_name'
-
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+
+# Custom Variables
+set :image_name, 'your_docker_image_name'
+set :container_name, 'your_docker_container_name'
+set :docker, `which docker`.chomp
+set :docker_compose, `which docker-compose`.chomp
 
 append :linked_files, 'docker.env'
 append :linked_dirs, 'log', 'tmp', 'public/.well-known/acme-challenge', 'public/system', 'public/assets'
@@ -17,9 +19,9 @@ namespace :deploy do
   task :dockerize do
     on roles(:web) do
       previous = capture("ls -t1 #{releases_path} | sed -n '2p'").to_s.strip
-      execute "cd #{release_path} && docker build --rm -t #{fetch(:image_name)} ."
-      execute "cd #{releases_path}/#{previous} && docker-compose down"
-      execute "cd #{release_path} && docker-compose up -d"
+      execute "cd #{release_path} && #{fetch(:docker)} build --rm -t #{fetch(:image_name)} ."
+      execute "cd #{releases_path}/#{previous} && #{fetch(:docker_compose)} down"
+      execute "cd #{release_path} && #{fetch(:docker_compose)} up -d"
       execute "cd #{shared_path} && chmod 777 log tmp"
     end
   end
@@ -27,31 +29,31 @@ namespace :deploy do
   desc 'Kill the application docker container.'
   task :kill_docker do
     on roles(:web) do
-      execute "docker stop #{fetch(:container_name)}; docker rm -f #{fetch(:container_name)}"
+      execute "#{fetch(:docker)} stop #{fetch(:container_name)}; docker rm -f #{fetch(:container_name)}"
     end
   end
 
   desc 'Precompile Assets'
   task :precompile do
     on roles(:web) do
-      execute "docker exec #{fetch(:container_name)} /bin/bash -c 'cd /home/app && RAILS_ENV=production bundle exec rake assets:precompile'"
+      execute "#{fetch(:docker)} exec #{fetch(:container_name)} sh -c 'cd /home/app && RAILS_ENV=production bundle exec rake assets:precompile'"
     end
   end
 
   desc 'Migrate Database'
   task :migrate do
     on roles(:db) do
-      execute "docker exec #{fetch(:container_name)} /bin/bash -c 'cd /home/app && RAILS_ENV=production bundle exec rake db:migrate'"
+      execute "#{fetch(:docker)} exec #{fetch(:container_name)} sh -c 'cd /home/app && RAILS_ENV=production bundle exec rake db:migrate'"
     end
   end
 
   desc 'Reset Database'
   task :reset_db do
     on roles(:db) do
-      execute "docker exec #{fetch(:container_name)} bash -c 'cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:drop'"
-      execute "docker exec #{fetch(:container_name)} bash -c 'cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:create'"
-      execute "docker exec #{fetch(:container_name)} bash -c 'cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:schema:load'"
-      execute "docker exec #{fetch(:container_name)} bash -c 'cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:seed'"
+      execute "#{fetch(:docker)} exec #{fetch(:container_name)} sh -c 'cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:drop'"
+      execute "#{fetch(:docker)} exec #{fetch(:container_name)} sh -c 'cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:create'"
+      execute "#{fetch(:docker)} exec #{fetch(:container_name)} sh -c 'cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:schema:load'"
+      execute "#{fetch(:docker)} exec #{fetch(:container_name)} sh -c 'cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:seed'"
     end
   end
 
