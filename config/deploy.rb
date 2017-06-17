@@ -47,13 +47,33 @@ namespace :deploy do
     end
   end
 
+  desc 'Init Database'
+  task :init_db do
+    on roles(:db) do
+      set :mysql, `which mysql`.chomp
+      ask :db_host, 'localhost'
+      ask :db_name, 'test'
+      ask :db_user, 'test'
+      ask :db_password, 'test'
+      ask :db_root_password, ''
+      set :query,
+        "CREATE DATABASE IF NOT EXISTS #{fetch(:db_name)} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci; \
+         CREATE USER '#{fetch(:db_user)}'@'%' IDENTIFIED BY '#{fetch(:db_password)}'; \
+         GRANT ALL PRIVILEGES ON #{fetch(:db_name)}.* TO '#{fetch(:db_user)}'@'%'; \
+         FLUSH PRIVILEGES;"
+      execute "#{fetch(:mysql)} -v -u root -p#{fetch(:db_root_password)} -h #{fetch(:db_host)} -e \"#{fetch(:query)}\""
+    end
+  end
+
   desc 'Reset Database'
   task :reset_db do
     on roles(:db) do
-      execute "#{fetch(:docker)} exec #{fetch(:container_name)} sh -c 'cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:drop'"
-      execute "#{fetch(:docker)} exec #{fetch(:container_name)} sh -c 'cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:create'"
-      execute "#{fetch(:docker)} exec #{fetch(:container_name)} sh -c 'cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:schema:load'"
-      execute "#{fetch(:docker)} exec #{fetch(:container_name)} sh -c 'cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:seed'"
+      set :reset_cmd,
+        "cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:drop && \
+         cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:create && \
+         cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:schema:load && \
+         cd /home/app && RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:seed"
+      execute "#{fetch(:docker)} exec #{fetch(:container_name)} sh -c '#{fetch(:reset_cmd)}'"
     end
   end
 
