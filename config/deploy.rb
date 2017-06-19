@@ -7,8 +7,8 @@ ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 # Custom Variables
 set :image_name, 'your_docker_image_name'
 set :container_name, 'your_docker_container_name'
-set :docker, `which docker`.chomp
-set :docker_compose, `which docker-compose`.chomp
+ask :docker, 'docker'
+ask :docker_compose, 'docker-compose'
 
 append :linked_files, 'docker.env'
 append :linked_dirs, 'log', 'tmp', 'public/.well-known/acme-challenge', 'public/system', 'public/assets'
