@@ -10,19 +10,8 @@ append :linked_dirs, 'log', 'tmp', 'public/.well-known/acme-challenge', 'public/
 # Custom Variables
 set :image_name, 'your_docker_image_name'
 set :container_name, 'your_docker_container_name'
-ask :server_is_mac, 'N'
-
-task :set_docker_path do
-  if fetch(:server_is_mac) == 'Y'
-    set :docker, '/usr/local/bin/docker'
-    set :docker_compose, '/usr/local/bin/docker-compose'
-  else
-    set :docker, 'docker'
-    set :docker_compose, 'docker-compose'
-  end
-end
-
-before :deploy, :set_docker_path
+set :docker, 'docker'
+set :docker_compose, 'docker-compose'
 
 namespace :deploy do
 
