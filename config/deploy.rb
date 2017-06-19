@@ -14,8 +14,8 @@ ask :server_is_mac, 'N'
 
 task :set_docker_path do
   if fetch(:server_is_mac) == 'Y'
-    set :docker, `which docker`.chomp
-    set :docker_compose, `which docker-compose`.chomp
+    set :docker, '/usr/local/bin/docker'
+    set :docker_compose, '/usr/local/bin/docker-compose'
   else
     set :docker, 'docker'
     set :docker_compose, 'docker-compose'
