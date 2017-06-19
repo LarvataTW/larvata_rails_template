@@ -4,14 +4,14 @@ set :repo_url, 'git@bitbucket.org:larvata-tw/your_app_name.git'
 set :deploy_to, '/www/your_app_name'
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
+append :linked_files, 'docker.env'
+append :linked_dirs, 'log', 'tmp', 'public/.well-known/acme-challenge', 'public/system', 'public/assets'
+
 # Custom Variables
 set :image_name, 'your_docker_image_name'
 set :container_name, 'your_docker_container_name'
-set :docker, `which docker`.chomp
-set :docker_compose, `which docker-compose`.chomp
-
-append :linked_files, 'docker.env'
-append :linked_dirs, 'log', 'tmp', 'public/.well-known/acme-challenge', 'public/system', 'public/assets'
+set :docker, 'docker'
+set :docker_compose, 'docker-compose'
 
 namespace :deploy do
 
