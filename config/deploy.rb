@@ -50,7 +50,7 @@ namespace :deploy do
   desc 'Init Database'
   task :init_db do
     on roles(:db) do
-      set :mysql, `which mysql`.chomp
+      ask :mysql, 'mysql'
       ask :db_host, 'localhost'
       ask :db_name, 'test'
       ask :db_user, 'test'
@@ -62,6 +62,20 @@ namespace :deploy do
          GRANT ALL PRIVILEGES ON #{fetch(:db_name)}.* TO '#{fetch(:db_user)}'@'%'; \
          FLUSH PRIVILEGES;"
       execute "#{fetch(:mysql)} -v -u root -p#{fetch(:db_root_password)} -h #{fetch(:db_host)} -e \"#{fetch(:query)}\""
+    end
+  end
+
+  desc 'Dump Database'
+  task :dump_db do
+    on roles(:db) do
+      ask :mysqldump, 'mysqldump'
+      ask :db_host, 'localhost'
+      ask :db_name, 'test'
+      ask :db_user, 'test'
+      ask :db_password, 'test'
+      execute "#{fetch(:mysqldump)} -u #{fetch(:db_user)} -p#{fetch(:db_password)} -h #{fetch(:db_host)} #{fetch(:db_name)} | gzip > /tmp/#{fetch(:db_name)}.sql.gz"
+      cmd = "scp -P %s %s@%s:/tmp/%s.sql.gz ./" % [host.port, host.user, host.hostname, fetch(:db_name)]
+      system cmd
     end
   end
 
