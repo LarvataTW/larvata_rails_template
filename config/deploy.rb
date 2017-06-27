@@ -13,6 +13,15 @@ set :container_name, 'your_docker_container_name'
 set :docker, 'docker'
 set :docker_compose, 'docker-compose'
 
+if ENV['BASTION']
+  require 'net/ssh/proxy/command'
+  bastion_host = 'your.bastion.machine'
+  bastion_user = 'your_ssh_account'
+  bastion_port = 22
+  ssh_command = "ssh -p #{bastion_port} #{bastion_user}@#{bastion_host} -W %h:%p"
+  set :ssh_options, proxy: Net::SSH::Proxy::Command.new(ssh_command)
+end
+
 namespace :deploy do
 
   desc 'Running a docker containers for this project.'
