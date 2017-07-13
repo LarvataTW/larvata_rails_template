@@ -113,7 +113,7 @@ namespace :deploy do
   desc "Attach To Docker Container Bash Shell"
   task :shell do
     roles(:web).each do |host|
-      cmd = "ssh -t -p %s %s@%s docker exec -it %s bash" % [host.port, host.user, host.hostname, fetch(:container_name)]
+      cmd = "ssh -t -p %s %s@%s #{fetch(:docker)} exec -it %s bash" % [host.port, host.user, host.hostname, fetch(:container_name)]
       system cmd
     end
   end
@@ -121,7 +121,7 @@ namespace :deploy do
   desc "Attach To Rails Console In Docker Container"
   task :console do
     roles(:web).each do |host|
-      cmd = "ssh -t -p %s %s@%s docker exec -it %s 'bash -c \"cd /home/app && bundle exec rails console production\"'" \
+      cmd = "ssh -t -p %s %s@%s #{fetch(:docker)} exec -it %s 'bash -c \"cd /home/app && bundle exec rails console production\"'" \
             % [host.port, host.user, host.hostname, fetch(:container_name)]
       system cmd
     end
