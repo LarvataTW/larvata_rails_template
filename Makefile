@@ -9,8 +9,6 @@ endif
 copy:
 	@cp -rvi config ${RUN_ARGS}
 	@cp -rvi Capfile ${RUN_ARGS}
-	@cp -rvi nginx.conf ${RUN_ARGS}
-	@cp -rvi rails.env.conf ${RUN_ARGS}
 	@cp -rvi .dockerignore ${RUN_ARGS}
 	@cp -rvi docker.env ${RUN_ARGS}
 	@cp -rvi Dockerfile ${RUN_ARGS}

@@ -22,10 +22,10 @@ gem 'grape-swagger'
 gem 'aasm'
 gem 'pundit'
 gem 'ransack'
-gem 'paperclip'
 gem 'paper_trail'
 gem 'simple_form'
 gem 'bulk_insert'
+gem 'carrierwave', '~> 1.0'
 
 gem 'hipchat'
 

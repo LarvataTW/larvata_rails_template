@@ -13,6 +13,15 @@ set :container_name, 'your_docker_container_name'
 set :docker, 'docker'
 set :docker_compose, 'docker-compose'
 
+if ENV['BASTION']
+  require 'net/ssh/proxy/command'
+  bastion_host = 'your.bastion.machine'
+  bastion_user = 'your_ssh_account'
+  bastion_port = 22
+  ssh_command = "ssh -p #{bastion_port} #{bastion_user}@#{bastion_host} -W %h:%p"
+  set :ssh_options, proxy: Net::SSH::Proxy::Command.new(ssh_command)
+end
+
 namespace :deploy do
 
   desc 'Running a docker containers for this project.'
@@ -50,7 +59,7 @@ namespace :deploy do
   desc 'Init Database'
   task :init_db do
     on roles(:db) do
-      set :mysql, `which mysql`.chomp
+      ask :mysql, 'mysql'
       ask :db_host, 'localhost'
       ask :db_name, 'test'
       ask :db_user, 'test'
@@ -62,6 +71,20 @@ namespace :deploy do
          GRANT ALL PRIVILEGES ON #{fetch(:db_name)}.* TO '#{fetch(:db_user)}'@'%'; \
          FLUSH PRIVILEGES;"
       execute "#{fetch(:mysql)} -v -u root -p#{fetch(:db_root_password)} -h #{fetch(:db_host)} -e \"#{fetch(:query)}\""
+    end
+  end
+
+  desc 'Dump Database'
+  task :dump_db do
+    on roles(:db) do
+      ask :mysqldump, 'mysqldump'
+      ask :db_host, 'localhost'
+      ask :db_name, 'test'
+      ask :db_user, 'test'
+      ask :db_password, 'test'
+      execute "#{fetch(:mysqldump)} -u #{fetch(:db_user)} -p#{fetch(:db_password)} -h #{fetch(:db_host)} #{fetch(:db_name)} | gzip > /tmp/#{fetch(:db_name)}.sql.gz"
+      cmd = "scp -P %s %s@%s:/tmp/%s.sql.gz ./" % [host.port, host.user, host.hostname, fetch(:db_name)]
+      system cmd
     end
   end
 
@@ -90,7 +113,7 @@ namespace :deploy do
   desc "Attach To Docker Container Bash Shell"
   task :shell do
     roles(:web).each do |host|
-      cmd = "ssh -t -p %s %s@%s docker exec -it %s bash" % [host.port, host.user, host.hostname, fetch(:container_name)]
+      cmd = "ssh -t -p %s %s@%s #{fetch(:docker)} exec -it %s bash" % [host.port, host.user, host.hostname, fetch(:container_name)]
       system cmd
     end
   end
@@ -98,7 +121,7 @@ namespace :deploy do
   desc "Attach To Rails Console In Docker Container"
   task :console do
     roles(:web).each do |host|
-      cmd = "ssh -t -p %s %s@%s docker exec -it %s 'bash -c \"cd /home/app && bundle exec rails console production\"'" \
+      cmd = "ssh -t -p %s %s@%s #{fetch(:docker)} exec -it %s 'bash -c \"cd /home/app && bundle exec rails console production\"'" \
             % [host.port, host.user, host.hostname, fetch(:container_name)]
       system cmd
     end
