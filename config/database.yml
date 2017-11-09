@@ -1,15 +1,15 @@
 default: &default
-  adapter: sqlite3
+  adapter: mysql2
   pool: 5
   timeout: 5000
 
 development:
   <<: *default
-  database: db/development.sqlite3
+  database: project_name
 
 test:
   <<: *default
-  database: db/test.sqlite3
+  database: project_name_test
 
 production:
   adapter: mysql2
