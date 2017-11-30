@@ -13,7 +13,7 @@ services:
     volumes:
       - ./:/home/app
     env_file:
-      - docker.env
+      - .env
 
   db:
     image: mariadb
@@ -22,4 +22,4 @@ services:
       - ./config/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./db/mysql:/var/lib/mysql
     env_file:
-      - docker.env
+      - .env

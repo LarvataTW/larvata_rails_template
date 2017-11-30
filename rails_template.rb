@@ -4,6 +4,7 @@ gem 'rails-i18n'
 gem 'jquery-rails'
 gem 'sass-rails'
 gem 'compass-rails'
+gem 'dotenv-rails'
 
 gem 'mysql2'
 gem 'uglifier'

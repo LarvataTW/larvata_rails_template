@@ -19,7 +19,7 @@ set :default_env, { path: "/usr/local/bin:$PATH" }
 # set :sudo, "sudo -u root -i"
 
 ### Shared files for Rails
-append :linked_files, 'docker.env'
+append :linked_files, '.env'
 append :linked_dirs, 'log', 'tmp', 'public/.well-known/acme-challenge', 'public/system', 'public/assets'
 
 ### Custom your deploy flow
