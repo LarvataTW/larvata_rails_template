@@ -49,7 +49,6 @@ gem_group :development, :test do
   gem 'rails-erd'
   gem 'bullet'
   gem 'rspec'
-  gem 'dotenv'
   gem 'highline'
   gem 'sshkit-sudo'
   gem 'capistrano'
