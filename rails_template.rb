@@ -4,7 +4,6 @@ gem 'rails-i18n'
 gem 'jquery-rails'
 gem 'sass-rails'
 gem 'compass-rails'
-gem 'dotenv-rails'
 
 gem 'mysql2'
 gem 'uglifier'
@@ -34,6 +33,7 @@ gem_group :test do
 end
 
 gem_group :development, :test do
+  gem 'dotenv-rails'
   gem 'web-console'
   gem 'quiet_assets'
   gem 'better_errors'
