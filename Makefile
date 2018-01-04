@@ -8,7 +8,7 @@ endif
 
 copy:
 	@cp -rvi config ${RUN_ARGS}
+	@cp -rvi .env.sample ${RUN_ARGS}
 	@cp -rvi .dockerignore ${RUN_ARGS}
-	@cp -rvi docker.env ${RUN_ARGS}
 	@cp -rvi Dockerfile ${RUN_ARGS}
 	@cp -rvi docker-compose.yml ${RUN_ARGS}
