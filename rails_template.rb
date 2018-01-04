@@ -59,6 +59,7 @@ gem_group :development, :test do
 end
 
 gem_group :production do
+  gem 'httparty'
   gem 'exception_notification'
 end
 
