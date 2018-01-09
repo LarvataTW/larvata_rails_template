@@ -1,4 +1,4 @@
-gem 'rails', '5.1'
+gem 'rails', '~> 5.1.4'
 gem 'rails-i18n'
 
 gem 'jquery-rails'
@@ -7,8 +7,6 @@ gem 'compass-rails'
 
 gem 'mysql2'
 gem 'uglifier'
-# gem 'jbuilder'
-# gem 'turbolinks'
 
 gem 'devise'
 gem 'devise-i18n'
@@ -27,12 +25,8 @@ gem 'simple_form'
 gem 'bulk_insert'
 gem 'carrierwave', '~> 1.0'
 
-gem_group :test do
-  gem 'sqlite3'
-  gem 'rspec'
-end
-
 gem_group :development, :test do
+  gem 'rspec-rails'
   gem 'dotenv-rails'
   gem 'web-console'
   gem 'quiet_assets'
@@ -48,7 +42,6 @@ gem_group :development, :test do
   gem 'guard-livereload'
   gem 'rails-erd'
   gem 'bullet'
-  gem 'rspec'
   gem 'highline'
   gem 'sshkit-sudo'
   gem 'capistrano'
@@ -56,6 +49,7 @@ gem_group :development, :test do
   gem 'capistrano-ssh-doctor'
   gem 'capistrano-safe-deploy-to'
   gem 'capistrano-deploy_hooks'
+  gem 'larvata_scaffold', git: "https://github.com/LarvataTW/larvata_scaffold.git"
 end
 
 gem_group :production do
@@ -63,27 +57,19 @@ gem_group :production do
   gem 'exception_notification'
 end
 
-group :darwin do
-  gem 'rb-fsevent'
+after_bundle do
+  run "rm README.rdoc"
+
+  git :init
+  git add: "."
+  git commit: %Q{ -m 'Initial commit' }
+
+  run 'git flow init'
+
+  generate 'devise:install'
+  generate 'devise User'
+  generate 'devise:views'
+  generate 'simple_form:install --bootstrap'
+
+  rails_command('db:migrate')
 end
-
-group :linux do
-  gem 'rb-inotify'
-end
-
-run "rm README.rdoc"
-run "echo '# #{@app_name.titleize}' >> README.md"
-run "bundle"
-
-generate 'devise:install'
-generate 'devise User'
-generate 'devise:views'
-generate 'simple_form:install --bootstrap'
-
-rake 'db:migrate'
-
-git :init
-git add: '.'
-git commit: "-a -m 'Initial commit by Rails bootstrap script.'"
-
-run 'git flow init'
