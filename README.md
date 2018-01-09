@@ -1,19 +1,15 @@
-# Rails 專案範本
-
-透過這個範本可以快速建立 Rails 專案引入常用的 Gems。
+# Rails Template
 
 ## 使用說明
 
-rails new project_name -m https://raw.githubusercontent.com/LarvataTW/rails_template/master/template.rb
+rails new your_project_name -m https://raw.githubusercontent.com/LarvataTW/larvata_rails_template/master/template.rb
 
 ## 參考資料
 
-* http://www.codebycodes.com/blog/2015/08/17/creating-rails-application-templates/
-* https://github.com/cnorm35/starter_template/blob/master/test_template.rb
+* http://guides.rubyonrails.org/rails_application_templates.html
+* https://www.justinweiss.com/articles/fast-consistent-setup-for-your-ruby-and-rails-projects/
 
----
-
-# Rails Dockerize for Larvata
+# Rails Dockerize
 
 ## References
 
