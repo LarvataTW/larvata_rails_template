@@ -92,11 +92,13 @@ Rails.application.configure do
     :email => {
       :email_prefix => "[#{Rails.application.class.parent}] ",
       :sender_address => %{"#{Rails.application.class.parent}" <info@#{ENV["MAIL_DOMAIN"]}>},
-      :exception_recipients => ENV["MAIL_RECEIVER"]
+      :exception_recipients => ENV["MAIL_RECEIVER"],
     },
-    :hipchat => {
-	  :api_token => ENV["HIPCHAT_TOKEN"],
-	  :room_name => ENV["HIPCHAT_ROOM"]
+    :mattermost => {
+      :webhook_url => ENV["MATTERMOST_WEBHOOK_URL"],
+      :channel => ENV["MATTERMOST_CHANNEL"],
+      :username => ENV["MATTERMOST_USERNAME"],
+      :avatar => ENV["MATTERMOST_ICON"],
     }
 
 end

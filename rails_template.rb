@@ -27,14 +27,13 @@ gem 'simple_form'
 gem 'bulk_insert'
 gem 'carrierwave', '~> 1.0'
 
-gem 'hipchat'
-
 gem_group :test do
   gem 'sqlite3'
   gem 'rspec'
 end
 
 gem_group :development, :test do
+  gem 'dotenv-rails'
   gem 'web-console'
   gem 'quiet_assets'
   gem 'better_errors'
@@ -47,13 +46,20 @@ gem_group :development, :test do
   gem 'binding_of_caller'
   gem 'guard'
   gem 'guard-livereload'
-  gem 'capistrano'
   gem 'rails-erd'
   gem 'bullet'
   gem 'rspec'
+  gem 'highline'
+  gem 'sshkit-sudo'
+  gem 'capistrano'
+  gem 'capistrano-wal-e'
+  gem 'capistrano-ssh-doctor'
+  gem 'capistrano-safe-deploy-to'
+  gem 'capistrano-deploy_hooks'
 end
 
 gem_group :production do
+  gem 'httparty'
   gem 'exception_notification'
 end
 
