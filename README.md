@@ -2,7 +2,8 @@
 
 ## 使用說明
 
-建議複製本專案的 railsrc 到 ~/.railsrc
+建議複製本專案的 railsrc 到 ~/.railsrc，
+並且修改其中的 template 路徑以符合實際的本機路徑。
 
 ```
 rails new \
@@ -10,7 +11,7 @@ rails new \
   --skip-spring \
   --skip-test-unit \
   --skip-turbolinks \
-  -m https://raw.githubusercontent.com/LarvataTW/larvata_rails_template/master/template.rb
+  --template=/your/path/to/larvata-rails-template/template.rb
   YOUR_RAILS_APP_NAME
 ```
 
