@@ -111,15 +111,15 @@ after_bundle do
   copy_file "Dockerfile"
   copy_file "docker-compose.yml"
 
-  git :init
-  git add: "."
-  git commit: %Q{ -m 'Initial commit by larvata template.' }
-  run 'git flow init'
-
   generate 'devise:install'
   generate 'devise User'
   generate 'devise:views'
   generate 'simple_form:install --bootstrap'
+
+  git :init
+  git add: "."
+  git commit: %Q{ -m 'Initial commit by larvata template.' }
+  run 'git flow init'
 
   # rails_command('db:create')
   # rails_command('db:migrate')
