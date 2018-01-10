@@ -96,6 +96,35 @@ EOF
   end
 end
 
+def production_config
+  <<-HEREDOC
+  config.action_mailer.default_url_options = { host: "http://\#{ENV['MAIL_DOMAIN']}" }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :authentication => :plain,
+    :address => ENV["MAIL_SERVER"],
+    :port => ENV["MAIL_PORT"],
+    :domain => ENV["MAIL_DOMAIN"],
+    :user_name => ENV["MAIL_USER"],
+    :password => ENV["MAIL_PASSWORD"],
+  }
+
+  Rails.application.config.middleware.use ExceptionNotification::Rack,
+    :email => {
+      :email_prefix => "[\#{Rails.application.class.parent}] ",
+      :sender_address => %{"\#{Rails.application.class.parent}" <no-reply@\#{ENV["MAIL_DOMAIN"]}>},
+      :exception_recipients => ENV["MAIL_RECEIVER"],
+    },
+    :mattermost => {
+      :webhook_url => ENV["MATTERMOST_WEBHOOK_URL"],
+      :channel => ENV["MATTERMOST_CHANNEL"],
+      :username => ENV["MATTERMOST_USERNAME"],
+      :avatar => ENV["MATTERMOST_ICON"],
+    }
+  HEREDOC
+end
+environment production_config, env: 'production'
+
 after_bundle do
   remove_dir "test"
   remove_file "README.rdoc"
