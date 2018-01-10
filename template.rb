@@ -66,6 +66,34 @@ gem_group :production do
   gem 'exception_notification'
 end
 
+inside 'config' do
+  remove_file 'database.yml'
+  create_file 'database.yml' do <<-EOF
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  collation: utf8mb4_unicode_ci
+  host: <%= ENV['DB_HOST'] %>
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+
+test:
+  <<: *default
+  database: #{app_name}_test
+
+development:
+  <<: *default
+  database: #{app_name}_development
+
+production:
+  <<: *default
+EOF
+  end
+end
+
 after_bundle do
   remove_dir "test"
   remove_file "README.rdoc"
