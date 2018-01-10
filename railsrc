@@ -1,7 +1,6 @@
 # ~/.railsrc
 
 --database=mysql
---skip-bundle
 --skip-spring
 --skip-test-unit
 --skip-turbolinks

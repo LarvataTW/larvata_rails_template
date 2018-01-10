@@ -21,6 +21,8 @@ rails new \
 
 ## 參考資料
 
+### template
+
 * http://guides.rubyonrails.org/rails_application_templates.html
 * http://railsapps.github.io/rails-application-templates.html
 * https://www.sitepoint.com/rails-application-templates-real-world/
@@ -30,6 +32,8 @@ rails new \
 * https://github.com/mattbrictson/rails-template
 * https://github.com/thoughtbot/suspenders
 * https://www.justinweiss.com/articles/fast-consistent-setup-for-your-ruby-and-rails-projects/
+
+### dockerize
 
 * https://github.com/phusion/passenger-docker
 * https://docs.docker.com/engine/examples/
