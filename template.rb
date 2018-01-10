@@ -32,7 +32,7 @@ gem 'pundit'
 gem 'ransack'
 gem 'paper_trail'
 gem 'simple_form'
-gem 'bulk_insert'
+gem 'bulk_insert' # Efficient bulk inserts with ActiveRecord.
 gem 'carrierwave', '~> 1.0'
 
 gem_group :development, :test do
@@ -97,12 +97,20 @@ end
 after_bundle do
   remove_dir "test"
   remove_file "README.rdoc"
+
+  remove_file "db/seeds.rb"
+  copy_file "db/seeds.rb"
+
   remove_file ".gitignore"
   copy_file ".gitignore"
+
+  copy_file "config/nginx.conf"
+  copy_file "config/nginx.env.conf"
+  copy_file "config/my.cnf"
+  copy_file ".env"
   copy_file ".dockerignore"
   copy_file "Dockerfile"
   copy_file "docker-compose.yml"
-  copy_file ".env"
 
   git :init
   git add: "."
@@ -114,6 +122,6 @@ after_bundle do
   generate 'devise:views'
   generate 'simple_form:install --bootstrap'
 
-  rails_command('db:create')
-  rails_command('db:migrate')
+  # rails_command('db:create')
+  # rails_command('db:migrate')
 end
