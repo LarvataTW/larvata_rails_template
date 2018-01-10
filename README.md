@@ -5,6 +5,9 @@
 建議複製本專案的 railsrc 到 ~/.railsrc，
 並且修改其中的 template 路徑以符合實際的本機路徑。
 
+1. `git clone git@github.com:LarvataTW/larvata_rails_template.git /path/to/larvata-rails-template`
+2. 執行：
+
 ```
 rails new \
   --database mysql \
