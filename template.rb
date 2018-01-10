@@ -97,7 +97,7 @@ EOF
 end
 
 def production_config
-  <<-HEREDOC
+  <<~HEREDOC
   config.action_mailer.default_url_options = { host: "http://\#{ENV['MAIL_DOMAIN']}" }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
