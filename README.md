@@ -2,10 +2,7 @@
 
 ## 使用說明
 
-建議複製本專案的 railsrc 到 ~/.railsrc，
-並且修改其中的 template 路徑以符合實際的本機路徑。
-
-1. `git clone git@github.com:LarvataTW/larvata_rails_template.git /path/to/larvata-rails-template`
+1. `git clone git@github.com:LarvataTW/larvata_rails_template.git /your/path/to/larvata-rails-template`
 2. 執行：
 
 ```
@@ -18,6 +15,10 @@ rails new \
   YOUR_RAILS_APP_NAME
 ```
 
+建議複製本專案的 railsrc 到 ~/.railsrc，
+並且修改其中的 template 路徑以符合實際的本機路徑。   
+如此一來，直接執行 `rails new YOUR_RAILS_APP_NAME` 即可。
+
 ## 參考資料
 
 * http://guides.rubyonrails.org/rails_application_templates.html
@@ -29,10 +30,6 @@ rails new \
 * https://github.com/mattbrictson/rails-template
 * https://github.com/thoughtbot/suspenders
 * https://www.justinweiss.com/articles/fast-consistent-setup-for-your-ruby-and-rails-projects/
-
-# Rails Dockerize
-
-## References
 
 * https://github.com/phusion/passenger-docker
 * https://docs.docker.com/engine/examples/
