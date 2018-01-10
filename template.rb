@@ -15,6 +15,7 @@ gem 'jquery-rails'
 gem 'sass-rails'
 gem 'compass-rails'
 
+gem 'puma'
 gem 'mysql2'
 gem 'uglifier' # Ruby wrapper for UglifyJS JavaScript compressor.
 
@@ -110,11 +111,6 @@ def production_config
     :password => ENV["MAIL_PASSWORD"],
   }
 
-  config.generators do |g|
-    g.test_framework :rspec, fixture_replacement: :fabrication
-    g.fixture_replacement :fabrication, dir: "spec/fabricators"
-  end
-
   Rails.application.config.middleware.use ExceptionNotification::Rack,
     :email => {
       :email_prefix => "[\#{Rails.application.class.parent}] ",
@@ -132,6 +128,16 @@ end
 environment production_config, env: 'production'
 
 after_bundle do
+  insert_into_file 'config/application.rb', after: "config.load_defaults 5.1\n" do <<~CONF
+    config.time_zone = 'Asia/Taipei'
+    config.i18n.default_locale = "zh-TW"
+    config.generators do |g|
+      g.test_framework :rspec, fixture_replacement: :fabrication
+      g.fixture_replacement :fabrication, dir: "spec/fabricators"
+    end
+  CONF
+  end
+
   remove_dir "test"
   remove_file "README.rdoc"
 
