@@ -36,6 +36,7 @@ gem 'bulk_insert' # Efficient bulk inserts with ActiveRecord.
 gem 'carrierwave', '~> 1.0'
 
 gem_group :development, :test do
+  gem 'brakeman', require: false
   gem 'rubocop', require: false
   gem 'sdoc'
   gem 'highline'
