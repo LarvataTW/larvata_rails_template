@@ -47,6 +47,7 @@ gem_group :development, :test do
   gem 'awesome_print'
   gem 'byebug'
   gem 'faker'
+  gem 'fabrication'
   gem 'pry'
   gem 'pry-rails'
   gem 'pry-rescue'
@@ -108,6 +109,11 @@ def production_config
     :user_name => ENV["MAIL_USER"],
     :password => ENV["MAIL_PASSWORD"],
   }
+
+  config.generators do |g|
+    g.test_framework :rspec, fixture_replacement: :fabrication
+    g.fixture_replacement :fabrication, dir: "spec/fabricators"
+  end
 
   Rails.application.config.middleware.use ExceptionNotification::Rack,
     :email => {
