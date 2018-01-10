@@ -1,12 +1,25 @@
-your_image_name:
-  image: your_image_name
-  container_name: your_image_name
-  restart: always
-  volumes:
-    - ./:/home/app
-  expose:
-    - "80"
-  ports:
-    - "80"
-  env_file:
-    - docker.env
+version: '3.1'
+
+services:
+
+  rails:
+    image: rails
+    container_name: rails
+    restart: always
+    expose:
+      - "80"
+    ports:
+      - "80"
+    volumes:
+      - ./:/home/app
+    env_file:
+      - .env
+
+  db:
+    image: mariadb
+    container_name: rails_db
+    volumes:
+      - ./config/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./db/mysql:/var/lib/mysql
+    env_file:
+      - .env
