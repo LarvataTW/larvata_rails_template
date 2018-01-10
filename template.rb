@@ -74,6 +74,7 @@ after_bundle do
   copy_file ".dockerignore"
   copy_file "Dockerfile"
   copy_file "docker-compose.yml"
+  copy_file ".env"
 
   git :init
   git add: "."
