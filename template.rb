@@ -41,7 +41,6 @@ gem_group :development, :test do
   gem 'rails-erd'
   gem 'rspec-rails'
   gem 'dotenv-rails'
-  gem 'quiet_assets'
   gem 'awesome_print'
   gem 'byebug'
   gem 'faker'
