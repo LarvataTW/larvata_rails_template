@@ -149,6 +149,7 @@ after_bundle do
   copy_file "Dockerfile"
   copy_file "docker-compose.yml"
 
+  generate 'rspec:install'
   generate 'devise:install'
   generate 'devise User'
   generate 'devise:views'
