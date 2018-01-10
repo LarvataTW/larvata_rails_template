@@ -2,11 +2,28 @@
 
 ## 使用說明
 
-rails new your_project_name -m https://raw.githubusercontent.com/LarvataTW/larvata_rails_template/master/template.rb
+建議複製本專案的 railsrc 到 ~/.railsrc
+
+```
+rails new \
+  --database mysql \
+  --skip-spring \
+  --skip-test-unit \
+  --skip-turbolinks \
+  -m https://raw.githubusercontent.com/LarvataTW/larvata_rails_template/master/template.rb
+  YOUR_RAILS_APP_NAME
+```
 
 ## 參考資料
 
 * http://guides.rubyonrails.org/rails_application_templates.html
+* http://railsapps.github.io/rails-application-templates.html
+* https://www.sitepoint.com/rails-application-templates-real-world/
+* http://brewhouse.io/2016/02/01/introducing-brewhouse-rails-template.html
+* https://github.com/RailsApps/rails_apps_composer
+* https://github.com/lewagon/rails-templates
+* https://github.com/mattbrictson/rails-template
+* https://github.com/thoughtbot/suspenders
 * https://www.justinweiss.com/articles/fast-consistent-setup-for-your-ruby-and-rails-projects/
 
 # Rails Dockerize
