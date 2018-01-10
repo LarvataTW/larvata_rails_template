@@ -47,6 +47,7 @@ gem_group :development, :test do
   gem 'awesome_print'
   gem 'byebug'
   gem 'faker'
+  gem 'fabrication'
   gem 'pry'
   gem 'pry-rails'
   gem 'pry-rescue'
@@ -109,6 +110,11 @@ def production_config
     :password => ENV["MAIL_PASSWORD"],
   }
 
+  config.generators do |g|
+    g.test_framework :rspec, fixture_replacement: :fabrication
+    g.fixture_replacement :fabrication, dir: "spec/fabricators"
+  end
+
   Rails.application.config.middleware.use ExceptionNotification::Rack,
     :email => {
       :email_prefix => "[\#{Rails.application.class.parent}] ",
@@ -143,6 +149,7 @@ after_bundle do
   copy_file "Dockerfile"
   copy_file "docker-compose.yml"
 
+  generate 'rspec:install'
   generate 'devise:install'
   generate 'devise User'
   generate 'devise:views'
