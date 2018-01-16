@@ -55,6 +55,8 @@ gem_group :development, :test do
   gem 'binding_of_caller'
   gem 'guard'
   gem 'guard-livereload'
+  gem 'guard-rspec', require: false
+  gem 'guard-bundler', require: false
   gem 'bullet' # help to kill N+1 queries and unused eager loading.
   gem 'sshkit-sudo'
   gem 'capistrano'
@@ -154,6 +156,7 @@ after_bundle do
   copy_file ".dockerignore"
   copy_file "Dockerfile"
   copy_file "docker-compose.yml"
+  copy_file "Guardfile"
 
   generate 'rspec:install'
   generate 'devise:install'
