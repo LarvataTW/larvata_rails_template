@@ -63,7 +63,7 @@ end
 #  * zeus: 'zeus rspec' (requires the server to be started separately)
 #  * 'just' rspec: 'rspec'
 
-guard :rspec, cmd: "bundle exec spring rspec", all_on_start: false do
+guard :rspec, cmd: "bundle exec rspec", all_on_start: false do
   require "guard/rspec/dsl"
   dsl = Guard::RSpec::Dsl.new(self)
 

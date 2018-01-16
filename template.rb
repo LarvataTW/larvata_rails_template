@@ -46,7 +46,6 @@ gem_group :development, :test do
   gem 'rspec-rails'
   gem 'dotenv-rails'
   gem 'awesome_print'
-  gem 'spring'
   gem 'byebug'
   gem 'faker'
   gem 'fabrication'
