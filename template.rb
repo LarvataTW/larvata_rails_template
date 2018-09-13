@@ -40,7 +40,7 @@ gem 'simple_form'
 gem 'bulk_insert' # Efficient bulk inserts with ActiveRecord.
 gem 'carrierwave', '~> 1.0'
 gem 'wysiwyg-rails'
-gem 'Thredded'
+gem 'thredded'
 
 gem_group :development, :test do
   gem 'brakeman', require: false
@@ -170,7 +170,7 @@ after_bundle do
 
   remove_file ".gitignore"
   copy_file ".gitignore"
-
+  create_file "app/assets/stylesheets/admin.css.scss"
   create_file "app/assets/javascripts/admin.js"
   copy_file "config/nginx.conf"
   copy_file "config/nginx.env.conf"
@@ -185,13 +185,12 @@ after_bundle do
   generate 'devise User'
   generate 'devise:views'
   generate 'simple_form:install --bootstrap'
+  rails_command('db:create')
   generate 'larvata_scaffold:install'
+  rails_command('db:migrate')
 
   git :init
   git add: "."
   git commit: %Q{ -m 'Initial commit by larvata template.' }
   run 'git flow init'
-
-  # rails_command('db:create')
-  # rails_command('db:migrate')
 end
