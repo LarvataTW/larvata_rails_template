@@ -4,4 +4,4 @@
 --skip-spring
 --skip-test-unit
 --skip-turbolinks
---template=/your/path/to/larvata-rails-template/template.rb
+--template=/Users/AngTsusiong/Documents/Larvata/larvata_rails_template/template.rb

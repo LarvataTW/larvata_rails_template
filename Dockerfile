@@ -1,5 +1,5 @@
 # See https://github.com/phusion/passenger-docker/blob/master/Changelog.md
-FROM phusion/passenger-ruby23:0.9.20
+FROM phusion/passenger-ruby23:0.9.35
 
 RUN apt-get update && \
     apt-get install -y imagemagick
