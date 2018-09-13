@@ -40,6 +40,7 @@ gem 'simple_form'
 gem 'bulk_insert' # Efficient bulk inserts with ActiveRecord.
 gem 'carrierwave', '~> 1.0'
 gem 'wysiwyg-rails'
+gem 'Thredded'
 
 gem_group :development, :test do
   gem 'brakeman', require: false
@@ -86,7 +87,6 @@ ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __dir__)
 require 'bundler/setup'
 EOF
   end
-
 
   remove_file 'database.yml'
   create_file 'database.yml' do <<-EOF
@@ -171,6 +171,7 @@ after_bundle do
   remove_file ".gitignore"
   copy_file ".gitignore"
 
+  create_file "app/assets/javascripts/admin.js"
   copy_file "config/nginx.conf"
   copy_file "config/nginx.env.conf"
   copy_file "config/my.cnf"
