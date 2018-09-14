@@ -170,8 +170,8 @@ after_bundle do
 
   remove_file ".gitignore"
   copy_file ".gitignore"
-  create_file "app/assets/stylesheets/admin.css.scss"
-  create_file "app/assets/javascripts/admin.js"
+  copy_file "app/assets/stylesheets/admin.css.scss"
+  copy_file "app/assets/javascripts/admin.js"
   copy_file "config/nginx.conf"
   copy_file "config/nginx.env.conf"
   copy_file "config/my.cnf"
@@ -187,6 +187,7 @@ after_bundle do
   generate 'simple_form:install --bootstrap'
   rails_command('db:create')
   generate 'larvata_scaffold:install'
+  generate 'rails g larvata_scaffold:controller user --admin'
   rails_command('db:migrate')
 
   git :init
