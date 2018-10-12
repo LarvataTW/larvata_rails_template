@@ -8,26 +8,29 @@ remove_file "Gemfile"
 run "touch Gemfile"
 add_source 'https://rubygems.org'
 
-gem 'rails', '~> 5.2.1'
+gem 'rails', '~> 5.2.0'
 gem 'rails-i18n'
 gem 'jquery-ui-rails'
 gem 'jquery-rails'
 gem 'sass-rails'
 gem 'compass-rails'
-gem 'jquery-fileupload-rails'
+gem 'nprogress-rails', '~> 0.2.0.2'
+gem "jquery-fileupload-rails"
 gem 'puma'
 gem 'mysql2'
-gem 'uglifier' # Ruby wrapper for UglifyJS JavaScript compressor.
-
+gem 'uglifier'
 gem 'devise'
 gem 'devise-i18n'
-
+gem 'devise_token_auth'
+gem 'jsonapi-resources'
+gem 'swagger_ui_engine'
 gem 'kaminari'
 gem 'kaminari-i18n'
 gem 'thor'
 gem 'grape'
 gem 'grape-swagger'
 gem 'enum_help'
+gem 'cocoon'
 gem 'aasm'
 gem 'font-awesome-rails'
 gem 'pundit'
@@ -35,12 +38,18 @@ gem 'i18n-js'
 gem 'rolify'
 gem 'ransack'
 gem 'seed_dump'
+gem 'photoswipe-rails'
 gem 'paper_trail'
 gem 'simple_form'
-gem 'bulk_insert' # Efficient bulk inserts with ActiveRecord.
+gem 'bulk_insert'
 gem 'carrierwave', '~> 1.0'
 gem 'wysiwyg-rails'
+gem 'hashie'
+gem 'every8d'
+gem 'paperclip'
+gem 'paranoia'
 gem 'thredded'
+gem 'rack-cors', require: 'rack/cors'
 
 gem_group :development, :test do
   gem 'brakeman', require: false
@@ -49,12 +58,10 @@ gem_group :development, :test do
   gem 'highline'
   gem 'rails-erd'
   gem 'xray-rails'
-  gem 'rspec-rails'
   gem 'dotenv-rails'
   gem 'awesome_print'
   gem 'byebug'
   gem 'faker'
-  gem 'fabrication'
   gem 'pry'
   gem 'pry-rails'
   gem 'pry-rescue'
@@ -62,20 +69,33 @@ gem_group :development, :test do
   gem 'pry-remote'
   gem 'pry-stack_explorer'
   gem 'binding_of_caller'
-  gem 'guard'
-  gem 'guard-livereload'
-  gem 'bullet' # help to kill N+1 queries and unused eager loading.
+  gem 'bullet'
   gem 'sshkit-sudo'
   gem 'capistrano'
   gem 'capistrano-wal-e'
   gem 'capistrano-ssh-doctor'
   gem 'capistrano-safe-deploy-to'
   gem 'capistrano-deploy_hooks'
-  gem 'larvata_scaffold', git: "https://github.com/LarvataTW/larvata_scaffold.git"
-end
+  gem 'larvata_scaffold', git: 'https://github.com/LarvataTW/larvata_scaffold.git'
+  gem 'rspec-rails'
+  gem 'fabrication'
+  gem 'database_cleaner'
+  gem 'spring-commands-rspec'
+  gem 'guard'
+  gem 'guard-livereload'
+  gem 'guard-rspec', require: false
+  gem 'fuubar'
+  gem 'shoulda'
+  gem 'shoulda-matchers', '~> 3.1'
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'chromedriver-helper'
+  end
 
 gem_group :production do
   gem 'httparty'
+  gem 'aws-sdk-s3'
+  gem 'rails_12factor'
   gem 'exception_notification'
 end
 
@@ -165,13 +185,10 @@ after_bundle do
   remove_dir "test"
   remove_file "README.rdoc"
 
-  remove_file "db/seeds.rb"
-  copy_file "db/seeds.rb"
-
   remove_file ".gitignore"
   copy_file ".gitignore"
-  copy_file "app/assets/stylesheets/admin.css.scss"
-  copy_file "app/assets/javascripts/admin.js"
+  copy_file "admin.css.scss", "app/assets/stylesheets/admin.css.scss"
+  copy_file "admin.js", "app/assets/javascripts/admin.js"
   copy_file "config/nginx.conf"
   copy_file "config/nginx.env.conf"
   copy_file "config/my.cnf"
@@ -187,8 +204,13 @@ after_bundle do
   generate 'simple_form:install --bootstrap'
   rails_command('db:create')
   generate 'larvata_scaffold:install'
-  generate 'rails g larvata_scaffold:controller user --admin'
   rails_command('db:migrate')
+  generate 'larvata_scaffold:controller user --admin'
+  rails_command('db:migrate')
+  generate 'rolify admin User'
+  rails_command('db:migrate')
+  remove_file "db/seeds.rb"
+  copy_file "db/seeds.rb"
 
   git :init
   git add: "."

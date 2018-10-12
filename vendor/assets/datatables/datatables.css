@@ -1,0 +1,9 @@
+/*
+ *= require ./css/datatables.min
+ *= require ./css/editor.dataTables.min
+ *= require ./css/responsive.dataTables.min
+ *= require ./css/rowReorder.dataTables.min
+ *= require ./css/buttons.dataTables.min
+ *= require ./css/select.dataTables.min
+ *= require_self
+ */

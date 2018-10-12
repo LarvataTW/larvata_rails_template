@@ -1,0 +1,9 @@
+//= require ./js/datatables.min
+//= require ./js/dataTables.editor.min
+//= require ./js/dataTables.responsive.min
+//= require ./js/dataTables.rowReorder.min
+//= require ./js/dataTables.select.min
+//= require ./js/dataTables.buttons.min
+//= require ./js/buttons.flash.min
+//= require ./js/buttons.html5.min
+//= require ./js/buttons.print.min
